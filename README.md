@@ -1,9 +1,9 @@
-# Scripts in order of exectution:
+# Scripts in order of execution:
 - `extract_KR_numbers.py`: Searches for parallel editions in the Kanripo. Needs the [Kanripo catalogue](https://github.com/kanripo/KR-Catalog)
 to be present in a directory `KR-Catalog-master`.
 - `download_kr.sh`: Downloads the parallel editions into directory `corpus`.
 - `unzip_corpus.sh`: Unzips the downloaded editions.
-- `extract_text.py`: Extracts and cleans the raw texts from the corpus.
+- `extract_text.py`: Extracts and cleans the raw texts from the corpus. 
 - `hirschberg.py`: Computes the alignments.
 - `find_candidates.py`: Search the alignments for candidates for differentiation and not differentiated variants in pairs of editions.
 - `compute_embeddings.py`: Computes contextual embeddings for each line in `parallel_passages.csv`.
