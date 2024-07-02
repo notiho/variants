@@ -1,0 +1,22 @@
+dynasty,dynasty_normalized,start,end
+周,Zhou,1046 BC,256 BC
+秦,Qin,221 BC,206 BC
+漢,Han,202 BC,220 AD
+吳,Three Kingdoms,220,280
+魏,Three Kingdoms,220,280
+晉,Jin,265,420
+後魏,Northern and Southern Dynasties,420,589
+劉宋,Northern and Southern Dynasties,420,589
+南齊,Northern and Southern Dynasties,420,589
+梁,Northern and Southern Dynasties,420,589
+陳,Northern and Southern Dynasties,420,589
+隋,Sui,581,618
+唐,Tang,618,907
+宋,Song,960,1279
+元,Yuan,1271,1368
+明,Ming,1368,1644
+清,Qing,1636,1912
+Other,Other,,
+蜀,Other,,
+遼,Other,,
+金,Other,,

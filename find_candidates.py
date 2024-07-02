@@ -487,6 +487,7 @@ random.seed(123456789)
 with open("alignments.csv") as infile:
 	lines  = infile.readlines()[1:]
 
+# Copied from https://stackoverflow.com/questions/14313510/how-to-calculate-rolling-moving-average-using-python-numpy-scipy
 def moving_average(a, n):
     ret = np.cumsum(a, dtype=float)
     ret[n:] = ret[n:] - ret[:-n]

@@ -5,6 +5,10 @@ library(caret)
 
 metadata_by_kr_number <- read_csv("kr_number_to_title_dynasty_author.csv")
 
+dynasty_times <- read_csv("dynasty_times.csv")
+
+alignments <- read_csv("alignments.csv")
+
 parallel_passages <- read_csv("parallel_passages.csv")
 
 factor_levels_by_profile <- sapply(
@@ -12,8 +16,36 @@ factor_levels_by_profile <- sapply(
   function(x) strsplit(x, ""))
 names(factor_levels_by_profile) <- unique(parallel_passages$profile)
 
-write_csv(data.frame(profile = unique(parallel_passages$profile)),
-          "selected_substitution_profiles.csv")
+# How much text is there from what time?
+
+alignments %>% 
+  mutate(wyg_length = str_length(str_remove_all(wyg_aligned, "＿"))) %>%
+  select(kr_number, wyg_length) %>%
+  left_join(metadata_by_kr_number, by = join_by(kr_number)) %>%
+  mutate(dynasty = coalesce(dynasty, "Other")) %>%
+  left_join(rownames_to_column(dynasty_times, var = "index"),
+            by = join_by("dynasty")) %>%
+  mutate(index = as.numeric(index)) %>%
+  group_by(dynasty_normalized) %>%
+  summarise(num_chars = sum(wyg_length),
+            num_works = n(),
+            start = first(start),
+            end = first(end),
+            index = first(index)) %>%
+  arrange(index) %>%
+  mutate(dynasty_normalized = if_else(dynasty_normalized == "Northern and Southern Dynasties",
+                                      "Northern and\\\\Southern Dynasties",
+                                      dynasty_normalized)) %>%
+  mutate(name_with_date = if_else(is.na(start),
+                                  dynasty_normalized,
+                                  paste0(
+                                         dynasty_normalized, " (",
+                                         start, "-", end, ")"))) %>%
+  mutate(str = paste(name_with_date, num_works,
+                     paste0("\\numprint{", num_chars, "}"),
+                     sep = "&")) %>%
+  pull(str) %>%
+  cat(sep = "\\\\\n")
 
 # Collect some descriptive statistics for the passages 
 
